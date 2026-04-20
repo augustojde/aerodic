@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#2B2D5B">
+<meta name="description" content="FAP Toolkit — Diccionario de inglés aeronáutico. Más de 19.400 entradas. FAP Global Consulting.">
+<title>FAP Toolkit — Diccionario Aeronáutico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#2B2D5B;--gold:#F5C842;--gold2:#e6b830;--cream:#EDE8DF;--cream2:#E3DDD3;--cream3:#D8D2C8;--ink:#1A1A2E;--ink2:#3D3F5C;--ink3:#7A7C96;--white:#FFFFFF;--border:rgba(43,45,91,0.12);--r:10px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Outfit",sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;display:flex;flex-direction:column}
+header{background:var(--navy);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px;flex-shrink:0;position:sticky;top:0;z-index:100}
+.logo{display:flex;align-items:center;gap:14px;text-decoration:none}
+.logo-badge{width:38px;height:38px;background:var(--cream);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:"Outfit",sans-serif;font-weight:700;font-size:11px;color:var(--navy);letter-spacing:-.5px;flex-shrink:0}
+.logo-sup{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);line-height:1;margin-bottom:3px}
+.logo-main{font-size:13px;font-weight:600;color:var(--white);line-height:1}
+.hdr-right{display:flex;align-items:center;gap:10px}
+.hdr-count{font-family:"DM Mono",monospace;font-size:10px;color:rgba(255,255,255,.4);letter-spacing:.06em}
+.hdr-link{font-family:"DM Mono",monospace;font-size:10px;color:var(--gold);text-decoration:none;opacity:.7}
+.hdr-link:hover{opacity:1}
+.user-btn{font-family:"DM Mono",monospace;font-size:10px;padding:5px 12px;border-radius:20px;border:1px solid rgba(255,255,255,.25);background:transparent;color:rgba(255,255,255,.8);cursor:pointer;transition:all .15s;white-space:nowrap}
+.user-btn:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.4)}
+.user-btn.pro{border-color:var(--gold);color:var(--gold)}
+.sw{background:var(--navy);padding:20px 24px 0;position:sticky;top:60px;z-index:90}
+.si{max-width:740px;margin:0 auto}
+.tod{background:rgba(245,200,66,.1);border:1px solid rgba(245,200,66,.22);border-radius:var(--r);padding:10px 14px;display:flex;align-items:flex-start;gap:10px;cursor:pointer;margin-bottom:14px;transition:background .15s}
+.tod:hover{background:rgba(245,200,66,.17)}
+.tod-dot{width:16px;height:16px;min-width:16px;background:var(--gold);border-radius:3px;margin-top:2px}
+.tod-lbl{font-family:"DM Mono",monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:2px}
+.tod-term{font-size:13px;font-weight:600;color:var(--white);margin-bottom:2px}
+.tod-def{font-size:12px;color:rgba(255,255,255,.55);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.15);border-radius:var(--r);padding:0 16px;height:50px;transition:border-color .15s,background .15s}
+.sb:focus-within{border-color:var(--gold);background:rgba(255,255,255,.12)}
+.si-ico{flex-shrink:0;opacity:.45;display:flex}
+#q{border:none;outline:none;flex:1;font-family:"Outfit",sans-serif;font-size:15px;color:var(--white);background:transparent}
+#q::placeholder{color:rgba(255,255,255,.38)}
+.cb{background:none;border:none;cursor:pointer;color:rgba(255,255,255,.5);font-size:14px;padding:4px;display:none;transition:color .1s}
+.cb:hover{color:var(--white)}
+.fb{max-width:740px;margin:10px auto 0;display:flex;gap:6px;flex-wrap:wrap;padding-bottom:16px}
+.chip{font-family:"DM Mono",monospace;font-size:10px;padding:4px 10px;border-radius:20px;border:1px solid rgba(255,255,255,.18);background:transparent;color:rgba(255,255,255,.55);cursor:pointer;transition:all .12s;white-space:nowrap}
+.chip:hover{border-color:var(--gold);color:var(--gold)}
+.chip.on{background:var(--gold);border-color:var(--gold);color:var(--navy);font-weight:500}
+.chip.ac.on{background:var(--cream);border-color:var(--cream);color:var(--navy)}
+.rb{max-width:740px;margin:0 auto;padding:10px 24px 6px;font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.05em;color:var(--ink3);display:flex;align-items:center;gap:10px}
+main{flex:1;padding:0 24px 48px}
+.el{max-width:740px;margin:0 auto;display:flex;flex-direction:column;gap:2px}
+.entry{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:14px 18px;cursor:pointer;transition:all .12s}
+.entry:hover{border-color:rgba(43,45,91,.22);box-shadow:0 2px 10px rgba(43,45,91,.08);transform:translateY(-1px)}
+.entry.exp{border-color:var(--navy);box-shadow:0 4px 16px rgba(43,45,91,.12)}
+.eh{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.et{font-size:15px;font-weight:600;color:var(--ink);line-height:1.3;flex:1}
+.et mark{background:rgba(245,200,66,.35);color:var(--ink);border-radius:2px;padding:0 1px}
+.em{display:flex;align-items:center;gap:5px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end}
+.cat{font-family:"DM Mono",monospace;font-size:10px;padding:2px 7px;border-radius:4px;letter-spacing:.03em}
+.co{background:#E8F4F8;color:#1a5f7a}.cm{background:#E8F5EC;color:#1a5c35}.cma{background:#FEF9E6;color:#7a5800}.ce{background:#FCE8EE;color:#7a1535}.cp{background:#F0E8FC;color:#5c1a8a}.ca{background:#E6F0FD;color:#1a4d9a}.cav{background:#E8F5EC;color:#1a5c35}.cf{background:rgba(245,200,66,.18);color:#7a5800}.cme{background:#E0F6FA;color:#005a6e}.cs{background:#FCE8F0;color:#7a0e44}.cd{background:#2B2D5B;color:#EDE8DF}.cx{background:var(--cream2);color:var(--ink2)}
+.tt{font-family:"DM Mono",monospace;font-size:9px;padding:2px 6px;border-radius:4px;letter-spacing:.06em;text-transform:uppercase}
+.tt-t{background:var(--navy);color:rgba(255,255,255,.65)}.tt-a{background:var(--cream2);color:var(--navy)}
+.ep{font-size:13px;color:var(--ink3);line-height:1.5;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ed{font-size:14px;color:var(--ink2);line-height:1.75;margin-top:10px;padding-top:10px;border-top:1px solid var(--cream2);display:none}
+.ed mark{background:rgba(245,200,66,.35);border-radius:2px;padding:0 1px}
+.entry.exp .ed{display:block}.entry.exp .ep{display:none}
+.ea{display:none;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap}
+.entry.exp .ea{display:flex}
+.ab{font-family:"DM Mono",monospace;font-size:11px;padding:5px 12px;border-radius:6px;border:1px solid var(--border);background:var(--cream);color:var(--ink2);cursor:pointer;transition:all .1s}
+.ab:hover{background:var(--navy);border-color:var(--navy);color:var(--white)}
+.ab.sv{background:rgba(245,200,66,.2);border-color:var(--gold2);color:#7a5800}
+.sk{background:var(--cream2);border-radius:var(--r);height:70px;margin-bottom:2px;animation:pu 1.4s ease-in-out infinite}
+@keyframes pu{0%,100%{opacity:1}50%{opacity:.5}}
+.empty{text-align:center;padding:60px 20px;color:var(--ink3);display:none}
+.empty h3{font-size:16px;font-weight:600;color:var(--ink2);margin-bottom:6px}
+.empty p{font-size:14px}
+.er{background:#FEF9E6;border:1px solid rgba(245,200,66,.4);border-radius:var(--r);padding:16px 20px;display:none;max-width:740px;margin:16px auto 0}
+.er h3{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:6px}
+.er p{font-size:13px;color:var(--ink2);line-height:1.5}
+.lm{text-align:center;padding:24px;display:none}
+.lm button{font-family:"Outfit",sans-serif;font-size:13px;font-weight:600;padding:10px 28px;border-radius:8px;border:1.5px solid var(--navy);background:transparent;color:var(--navy);cursor:pointer;transition:all .12s}
+.lm button:hover{background:var(--navy);color:var(--white)}
+.lm button:disabled{opacity:.4;cursor:not-allowed}
+/* FREEMIUM WALL */
+.paywall{background:var(--white);border:1.5px solid var(--navy);border-radius:var(--r);padding:24px;text-align:center;max-width:740px;margin:20px auto;display:none}
+.paywall h3{font-size:18px;font-weight:600;color:var(--navy);margin-bottom:8px}
+.paywall p{font-size:14px;color:var(--ink2);line-height:1.6;margin-bottom:20px}
+.paywall-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn-pro{font-family:"Outfit",sans-serif;font-size:14px;font-weight:600;padding:12px 28px;border-radius:8px;border:none;background:var(--navy);color:var(--white);cursor:pointer;transition:opacity .15s}
+.btn-pro:hover{opacity:.88}
+.btn-login{font-family:"Outfit",sans-serif;font-size:14px;font-weight:400;padding:12px 20px;border-radius:8px;border:1.5px solid var(--navy);background:transparent;color:var(--navy);cursor:pointer;transition:all .12s}
+.btn-login:hover{background:var(--cream2)}
+/* MODAL AUTH */
+.modal-bg{position:fixed;inset:0;background:rgba(43,45,91,.5);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-bg.open{display:flex}
+.modal{background:var(--white);border-radius:16px;padding:32px;width:100%;max-width:400px;position:relative}
+.modal h2{font-size:20px;font-weight:600;color:var(--navy);margin-bottom:6px}
+.modal .sub{font-size:13px;color:var(--ink3);margin-bottom:24px}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--ink3)}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:12px;font-weight:500;color:var(--ink2);margin-bottom:6px;font-family:"DM Mono",monospace;letter-spacing:.04em;text-transform:uppercase}
+.field input{width:100%;padding:10px 14px;border:1.5px solid var(--cream3);border-radius:8px;font-family:"Outfit",sans-serif;font-size:14px;color:var(--ink);outline:none;transition:border-color .15s;background:var(--white)}
+.field input:focus{border-color:var(--navy)}
+.modal-btn{width:100%;padding:12px;border-radius:8px;border:none;background:var(--navy);color:var(--white);font-family:"Outfit",sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:opacity .15s;margin-top:4px}
+.modal-btn:hover{opacity:.88}
+.modal-btn:disabled{opacity:.5;cursor:not-allowed}
+.modal-switch{text-align:center;margin-top:16px;font-size:13px;color:var(--ink3)}
+.modal-switch a{color:var(--navy);cursor:pointer;font-weight:500}
+.modal-err{background:#FCE8EE;border-radius:6px;padding:8px 12px;font-size:12px;color:#7a1535;margin-bottom:12px;display:none}
+.plan-badge{display:inline-block;font-family:"DM Mono",monospace;font-size:10px;padding:3px 10px;border-radius:20px;background:rgba(245,200,66,.2);color:#7a5800;border:1px solid var(--gold2);margin-left:8px;vertical-align:middle}
+footer{background:var(--navy);color:rgba(255,255,255,.35);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.04em;flex-wrap:wrap;gap:8px}
+footer a{color:var(--gold);text-decoration:none;opacity:.7}
+footer a:hover{opacity:1}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(60px);background:var(--navy);color:var(--white);padding:10px 20px;border-radius:20px;font-size:13px;font-family:"DM Mono",monospace;transition:transform .25s cubic-bezier(.34,1.56,.64,1);z-index:1000;white-space:nowrap;border:1px solid rgba(245,200,66,.3)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--cream)}::-webkit-scrollbar-thumb{background:var(--cream3);border-radius:3px}
+@media(max-width:480px){header{padding:0 16px}.sw{padding:16px 16px 0}main{padding:0 16px 48px}.rb{padding:10px 16px 6px}.et{font-size:14px}.hdr-link{display:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="https://www.fapglobalconsulting.com" target="_blank">
+    <div class="logo-badge">FAP</div>
+    <div>
+      <div class="logo-sup">FAP Global Consulting</div>
+      <div class="logo-main">Toolkit — Diccionario Aeronáutico</div>
+    </div>
+  </a>
+  <div class="hdr-right">
+    <span class="hdr-count">19.416 entradas</span>
+    <a class="hdr-link" href="https://www.fapglobalconsulting.com" target="_blank">fapglobalconsulting.com ↗</a>
+    <button class="user-btn" id="auth-btn" onclick="openAuth()">Iniciar sesión</button>
+  </div>
+</header>
+
+<div class="sw">
+  <div class="si">
+    <div class="tod" id="tod">
+      <div class="tod-dot"></div>
+      <div style="flex:1;min-width:0">
+        <div class="tod-lbl">Término del día</div>
+        <div class="tod-term" id="tt">Cargando…</div>
+        <div class="tod-def" id="td"></div>
+      </div>
+    </div>
+    <div class="sb">
+      <div class="si-ico">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+      </div>
+      <input type="text" id="q" placeholder="Buscar término en inglés, sigla o definición…" autocomplete="off" spellcheck="false">
+      <button class="cb" id="cb" onclick="clr()">✕</button>
+    </div>
+    <div class="fb">
+      <span class="chip on" data-f="all">Todos</span>
+      <span class="chip" data-f="term">Términos</span>
+      <span class="chip ac" data-f="acronym">Siglas</span>
+      <span class="chip" data-f="oper">oper</span>
+      <span class="chip" data-f="man">man</span>
+      <span class="chip" data-f="mat">mat</span>
+      <span class="chip" data-f="ppr">ppr</span>
+      <span class="chip" data-f="aer">aer</span>
+      <span class="chip" data-f="avi">avi</span>
+      <span class="chip" data-f="fhs">fhs</span>
+      <span class="chip" data-f="met">met</span>
+      <span class="chip" data-f="est">est</span>
+      <span class="chip" data-f="nav/com">nav/com</span>
+      <span class="chip" data-f="def">def</span>
+    </div>
+  </div>
+</div>
+
+<div class="rb"><span id="rc"></span><span id="rt"></span></div>
+
+<main>
+  <div class="el" id="el"></div>
+  <div class="empty" id="em"><h3>Sin resultados</h3><p>Probá con otro término, sigla o categoría.</p></div>
+  <div class="er" id="er"><h3>Error de conexión</h3><p id="em2"></p></div>
+
+  <!-- PAYWALL -->
+  <div class="paywall" id="paywall">
+    <h3>Alcanzaste el límite del plan gratuito</h3>
+    <p>El plan gratuito incluye 20 búsquedas por día.<br>Suscribite al plan Pro para acceso ilimitado a las 19.416 entradas, filtros avanzados, favoritos y modo offline.</p>
+    <div class="paywall-btns">
+      <button class="btn-pro" onclick="goProPage()">Suscribirme — USD 4,99/mes</button>
+      <button class="btn-login" onclick="openAuth()">Ya tengo cuenta</button>
+    </div>
+  </div>
+
+  <div class="lm" id="lm"><button id="lb" onclick="more()">Mostrar más</button></div>
+</main>
+
+<footer>
+  <span>© 2026 FAP Global Consulting LLC · Todos los derechos reservados</span>
+  <span><a href="https://www.fapglobalconsulting.com" target="_blank">fapglobalconsulting.com</a> · <a href="mailto:info@fapglobalconsulting.com">info@fapglobalconsulting.com</a></span>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<!-- AUTH MODAL -->
+<div class="modal-bg" id="modal-bg">
+  <div class="modal">
+    <button class="modal-close" onclick="closeAuth()">×</button>
+    <h2 id="modal-title">Iniciar sesión</h2>
+    <p class="sub" id="modal-sub">Accedé a tu plan FAP Toolkit</p>
+    <div class="modal-err" id="modal-err"></div>
+    <div class="field"><label>Email</label><input type="email" id="auth-email" placeholder="tu@email.com"></div>
+    <div class="field"><label>Contraseña</label><input type="password" id="auth-pass" placeholder="••••••••"></div>
+    <div class="field" id="field-pass2" style="display:none"><label>Repetir contraseña</label><input type="password" id="auth-pass2" placeholder="••••••••"></div>
+    <button class="modal-btn" id="modal-btn" onclick="submitAuth()">Entrar</button>
+    <p class="modal-switch" id="modal-switch">¿No tenés cuenta? <a onclick="toggleMode()">Registrate gratis</a></p>
+    <p class="modal-switch" style="margin-top:8px"><a onclick="forgotPass()" style="font-size:12px;color:var(--ink3)">Olvidé mi contraseña</a></p>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+const SB_URL="https://mquchgrddjwaqrqfvxdq.supabase.co";
+const SB_KEY="sb_publishable_4V9XYX0IlIPFkg5XqLqhYg_kFE7-00H";
+const PAYHIP_URL="https://payhip.com/b/https://payhip.com/FAPGlobalConsultingLLC"; 
+const FREE_LIMIT=20;
+const TABLE="entries";
+const PAGE=30;
+
+const sb=supabase.createClient(SB_URL,SB_KEY);
+
+let Q="",F="all",L=[],N=0,X=null,TM=null,BZ=false;
+let USER=null,PLAN="free",searches=0,authMode="login";
+let favs=new Set(JSON.parse(localStorage.getItem("fap_favs")||"[]"));
+
+// Contador de búsquedas del día (free)
+function getSearchCount(){
+  const today=new Date().toDateString();
+  const saved=JSON.parse(localStorage.getItem("fap_searches")||"{}");
+  if(saved.date!==today)return 0;
+  return saved.count||0;
+}
+function incSearchCount(){
+  const today=new Date().toDateString();
+  const saved=JSON.parse(localStorage.getItem("fap_searches")||"{}");
+  const count=(saved.date===today?saved.count:0)+1;
+  localStorage.setItem("fap_searches",JSON.stringify({date:today,count}));
+  return count;
+}
+
+// Auth
+async function initAuth(){
+  const{data:{session}}=await sb.auth.getSession();
+  if(session){
+    USER=session.user;
+    await loadProfile();
+    updateAuthUI();
+  }
+  sb.auth.onAuthStateChange(async(event,session)=>{
+    USER=session?.user||null;
+    if(USER){await loadProfile();}else{PLAN="free";}
+    updateAuthUI();
+  });
+}
+
+async function loadProfile(){
+  const{data}=await sb.from("profiles").select("plan,plan_end").eq("id",USER.id).single();
+  if(data){
+    const now=new Date();
+    const end=data.plan_end?new Date(data.plan_end):null;
+    PLAN=(data.plan==="pro"&&end&&end>now)?"pro":"free";
+  }
+}
+
+function updateAuthUI(){
+  const btn=document.getElementById("auth-btn");
+  if(USER){
+    btn.textContent=PLAN==="pro"?"★ Pro — Salir":"Mi cuenta";
+    btn.className="user-btn"+(PLAN==="pro"?" pro":"");
+    btn.onclick=()=>{if(confirm("¿Cerrar sesión?"))sb.auth.signOut();};
+  }else{
+    btn.textContent="Iniciar sesión";
+    btn.className="user-btn";
+    btn.onclick=openAuth;
+  }
+}
+
+function openAuth(){document.getElementById("modal-bg").classList.add("open");document.getElementById("auth-email").focus();}
+function closeAuth(){document.getElementById("modal-bg").classList.remove("open");}
+function toggleMode(){
+  authMode=authMode==="login"?"register":"login";
+  document.getElementById("modal-title").textContent=authMode==="login"?"Iniciar sesión":"Crear cuenta";
+  document.getElementById("modal-sub").textContent=authMode==="login"?"Accedé a tu plan FAP Toolkit":"Registrate gratis y empezá a explorar";
+  document.getElementById("modal-btn").textContent=authMode==="login"?"Entrar":"Crear cuenta";
+  document.getElementById("field-pass2").style.display=authMode==="register"?"block":"none";
+  document.getElementById("modal-switch").innerHTML=authMode==="login"?'¿No tenés cuenta? <a onclick="toggleMode()">Registrate gratis</a>':'¿Ya tenés cuenta? <a onclick="toggleMode()">Iniciá sesión</a>';
+  document.getElementById("modal-err").style.display="none";
+}
+
+async function submitAuth(){
+  const email=document.getElementById("auth-email").value.trim();
+  const pass=document.getElementById("auth-pass").value;
+  const btn=document.getElementById("modal-btn");
+  const err=document.getElementById("modal-err");
+  if(!email||!pass){showErr("Completá todos los campos.");return;}
+  btn.disabled=true;btn.textContent="Procesando…";err.style.display="none";
+  try{
+    let res;
+    if(authMode==="login"){
+      res=await sb.auth.signInWithPassword({email,password:pass});
+    }else{
+      const pass2=document.getElementById("auth-pass2").value;
+      if(pass!==pass2){showErr("Las contraseñas no coinciden.");btn.disabled=false;btn.textContent="Crear cuenta";return;}
+      res=await sb.auth.signUp({email,password:pass});
+    }
+    if(res.error){showErr(res.error.message);}
+    else{closeAuth();toast(authMode==="login"?"¡Bienvenido de vuelta!":"¡Cuenta creada! Revisá tu email para confirmar.");}
+  }catch(e){showErr("Error inesperado. Intentá de nuevo.");}
+  btn.disabled=false;btn.textContent=authMode==="login"?"Entrar":"Crear cuenta";
+}
+
+async function forgotPass(){
+  const email=document.getElementById("auth-email").value.trim();
+  if(!email){showErr("Ingresá tu email primero.");return;}
+  await sb.auth.resetPasswordForEmail(email);
+  toast("Email de recuperación enviado");
+  closeAuth();
+}
+
+function showErr(msg){const e=document.getElementById("modal-err");e.textContent=msg;e.style.display="block";}
+
+function goProPage(){window.open(PAYHIP_URL,"_blank");}
+
+// Dictionary
+const CC={oper:"co",man:"cm",mat:"cma",est:"ce",ppr:"cp",var:"cx",aer:"ca",avi:"cav",fhs:"cf",met:"cme",sie:"cs",def:"cd","nav/com":"co"};
+const cc=c=>CC[c]||"cx";
+function hl(t,q){if(!q||!t)return t||"";try{return t.replace(new RegExp("("+q.replace(/[-[\]{}()*+?.,\^$|#\s]/g,"\$&")+")","gi"),"<mark>$1</mark>");}catch(e){return t;}}
+function ca(r){if(!r)return[];if(Array.isArray(r))return r;const i=String(r).replace(/^\{|\}$/g,"").trim();return i?i.split(",").map(s=>s.trim()):[]}
+function sk(n=6){document.getElementById("el").innerHTML=Array(n).fill('<div class="sk"></div>').join("");}
+
+function render(data,ap=false){
+  const el=document.getElementById("el"),q=Q.trim();
+  if(!ap)el.innerHTML="";
+  if(!data.length&&!ap){document.getElementById("em").style.display="block";return;}
+  document.getElementById("em").style.display="none";
+  el.insertAdjacentHTML("beforeend",data.map(e=>{
+    const ex=X===e.id,fv=favs.has(e.id),cv=ca(e.categories);
+    const ch=cv.map(c=>'<span class="cat '+cc(c)+'">'+c+"</span>").join("");
+    const th=e.entry_type==="acronym"?'<span class="tt tt-a">sigla</span>':'<span class="tt tt-t">término</span>';
+    return '<div class="entry'+(ex?" exp":"")+'" id="e'+e.id+'" onclick="tog('+e.id+')">'
+      +'<div class="eh"><div class="et">'+hl(e.term,q)+"</div>"
+      +'<div class="em">'+ch+th+"</div></div>"
+      +(!ex?'<div class="ep">'+(e.definition||"").substring(0,110)+((e.definition||"").length>110?"…":"")+"</div>":"")
+      +(ex?'<div class="ed">'+hl(e.definition,q)+"</div>":"")
+      +(ex?'<div class="ea" onclick="event.stopPropagation()"><button class="ab'+(fv?" sv":"")+'" onclick="fav('+e.id+')">'+(fv?"★ Guardado":"☆ Guardar")+'</button><button class="ab" onclick="cop('+e.id+')">Copiar</button></div>':"")
+      +"</div>";
+  }).join(""));
+}
+
+async function go(ap=false){
+  if(BZ)return;
+
+  // Freemium check
+  if(!USER||PLAN==="free"){
+    const cnt=getSearchCount();
+    if(cnt>=FREE_LIMIT&&Q.trim()){
+      document.getElementById("paywall").style.display="block";
+      document.getElementById("el").innerHTML="";
+      document.getElementById("rc").textContent="Límite diario alcanzado";
+      document.getElementById("lm").style.display="none";
+      BZ=false;return;
+    }
+  }
+  document.getElementById("paywall").style.display="none";
+
+  BZ=true;
+  const t0=performance.now(),of=ap?L.length:0;
+  if(!ap){sk();L=[];["em","er","lm"].forEach(id=>document.getElementById(id).style.display="none");
+    document.getElementById("rc").textContent="Buscando…";document.getElementById("rt").textContent="";}
+  else{document.getElementById("lb").disabled=true;document.getElementById("lb").textContent="Cargando…";}
+  try{
+    const h={"apikey":SB_KEY,"Authorization":"Bearer "+SB_KEY,"Prefer":"count=exact"};
+    let url=SB_URL+"/rest/v1/"+TABLE+"?select=*&limit="+PAGE+"&offset="+of+"&order=term.asc";
+    if(F==="term")url+="&entry_type=eq.term";
+    if(F==="acronym")url+="&entry_type=eq.acronym";
+    if(!["all","term","acronym"].includes(F))url+="&categories=cs.%7B"+encodeURIComponent(F)+"%7D";
+    if(Q.trim())url+="&term=ilike.*"+encodeURIComponent(Q.trim())+"*";
+    const r=await fetch(url,{headers:h});
+    if(!r.ok){const e=await r.text();throw new Error(r.status+": "+e);}
+    N=parseInt((r.headers.get("content-range")||"").split("/")[1]||"0");
+    const d=await r.json();
+    L=ap?[...L,...d]:d;
+
+    // Contar búsqueda solo si es free y hay query
+    if((!USER||PLAN==="free")&&Q.trim())incSearchCount();
+
+    const ms=Math.round(performance.now()-t0);
+    const cnt=getSearchCount();
+    const planInfo=(!USER||PLAN==="free")&&Q.trim()?" · "+(FREE_LIMIT-cnt)+" búsquedas libres hoy":"";
+    document.getElementById("rc").textContent=N.toLocaleString("es")+" resultado"+(N!==1?"s":"")+planInfo;
+    document.getElementById("rt").textContent=Q?"· "+ms+"ms":"";
+    if(!ap)document.getElementById("el").innerHTML="";
+    render(d,ap);
+    const mv=L.length<N;
+    document.getElementById("lm").style.display=mv?"block":"none";
+    if(mv){document.getElementById("lb").disabled=false;document.getElementById("lb").textContent="Mostrar más ("+(N-L.length).toLocaleString("es")+" restantes)";}
+  }catch(e){
+    document.getElementById("el").innerHTML="";
+    document.getElementById("er").style.display="block";
+    document.getElementById("em2").textContent=e.message;
+    document.getElementById("rc").textContent="Error de conexión";
+  }
+  BZ=false;
+}
+
+function more(){go(true);}
+function tog(id){X=X===id?null:id;render(L);if(X)setTimeout(()=>{const el=document.getElementById("e"+id);if(el)el.scrollIntoView({behavior:"smooth",block:"nearest"});},50);}
+function fav(id){favs.has(id)?(favs.delete(id),toast("Eliminado de guardados")):(favs.add(id),toast("★ Guardado"));localStorage.setItem("fap_favs",JSON.stringify([...favs]));render(L);}
+function cop(id){const e=L.find(x=>x.id===id);if(e)navigator.clipboard.writeText(e.term+" — "+e.definition).then(()=>toast("Copiado"));}
+function clr(){document.getElementById("q").value="";Q="";document.getElementById("cb").style.display="none";X=null;go();}
+let tT;function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("show");clearTimeout(tT);tT=setTimeout(()=>t.classList.remove("show"),2200);}
+
+async function tod(){
+  try{
+    const h={"apikey":SB_KEY,"Authorization":"Bearer "+SB_KEY};
+    const day=Math.floor(Date.now()/86400000);
+    const r=await fetch(SB_URL+"/rest/v1/"+TABLE+"?select=*&limit=1&offset="+(day%17000)+"&order=term.asc&entry_type=eq.term",{headers:h});
+    if(!r.ok)return;
+    const d=await r.json();
+    if(d&&d[0]){const e=d[0];
+      document.getElementById("tt").textContent=e.term;
+      document.getElementById("td").textContent=e.definition;
+      document.getElementById("tod").onclick=()=>{
+        document.getElementById("q").value=e.term;Q=e.term;
+        document.getElementById("cb").style.display="block";
+        document.querySelectorAll(".chip").forEach(c=>c.classList.remove("on"));
+        document.querySelector("[data-f=all]").classList.add("on");
+        F="all";X=e.id;go();
+        setTimeout(()=>window.scrollTo({top:280,behavior:"smooth"}),200);
+      };
+    }
+  }catch(e){document.getElementById("tod").style.display="none";}
+}
+
+document.getElementById("q").addEventListener("input",function(){Q=this.value;document.getElementById("cb").style.display=Q?"block":"none";X=null;clearTimeout(TM);TM=setTimeout(go,280);});
+document.querySelectorAll(".chip").forEach(c=>c.addEventListener("click",function(){document.querySelectorAll(".chip").forEach(x=>x.classList.remove("on"));this.classList.add("on");F=this.dataset.f;X=null;go();}));
+document.getElementById("auth-email").addEventListener("keydown",e=>{if(e.key==="Enter")document.getElementById("auth-pass").focus();});
+document.getElementById("auth-pass").addEventListener("keydown",e=>{if(e.key==="Enter")submitAuth();});
+
+initAuth();
+tod();
+go();
+</script>
+</body>
+</html>
