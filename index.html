@@ -215,7 +215,7 @@ footer a:hover{opacity:1}
 <script>
 const SB_URL="https://mquchgrddjwaqrqfvxdq.supabase.co";
 const SB_KEY="sb_publishable_4V9XYX0IlIPFkg5XqLqhYg_kFE7-00H";
-const PAYHIP_URL="https://payhip.com/b/https://payhip.com/FAPGlobalConsultingLLC"; 
+const PAYHIP_URL="https://payhip.com/b/XXXXXX"; // <-- REEMPLAZAR con tu URL de Payhip
 const FREE_LIMIT=20;
 const TABLE="entries";
 const PAGE=30;
@@ -382,6 +382,23 @@ async function go(ap=false){
     if(!r.ok){const e=await r.text();throw new Error(r.status+": "+e);}
     N=parseInt((r.headers.get("content-range")||"").split("/")[1]||"0");
     const d=await r.json();
+
+    // Ordenar por prioridad de coincidencia:
+    // 1. Término exacto (term === query)
+    // 2. Término empieza con query (term startsWith query)
+    // 3. Contiene query en el término
+    if(Q.trim()){
+      const q=Q.trim().toLowerCase();
+      d.sort((a,b)=>{
+        const at=a.term.toLowerCase(), bt=b.term.toLowerCase();
+        const ap1=at===q, bp1=bt===q;
+        if(ap1!==bp1) return ap1?-1:1;
+        const ap2=at.startsWith(q), bp2=bt.startsWith(q);
+        if(ap2!==bp2) return ap2?-1:1;
+        return at.localeCompare(bt);
+      });
+    }
+
     L=ap?[...L,...d]:d;
 
     // Contar búsqueda solo si es free y hay query
